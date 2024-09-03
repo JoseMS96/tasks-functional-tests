@@ -5,20 +5,29 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
 
-    public WebDriver accessApp() {
-        WebDriver driver = new ChromeDriver();
-        driver.navigate().to("http://localhost:8001/tasks/");
+    public WebDriver accessApp() throws MalformedURLException {
+//        WebDriver driver = new ChromeDriver();
+
+        // Redirecionando a execução a um grid
+        DesiredCapabilities cap = new DesiredCapabilities();
+        cap.setBrowserName("chrome");
+        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
+        driver.navigate().to("http://192.168.0.104:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
 
     @Test
-    public void shouldSaveTaskSuccessfully() {
+    public void shouldSaveTaskSuccessfully() throws MalformedURLException {
         WebDriver driver = accessApp();
 
         try {
@@ -46,7 +55,7 @@ public class TasksTest {
     }
 
     @Test
-    public void shouldNotSaveTaskWithoutDescription() {
+    public void shouldNotSaveTaskWithoutDescription() throws MalformedURLException {
         WebDriver driver = accessApp();
 
         try {
@@ -71,7 +80,7 @@ public class TasksTest {
     }
 
     @Test
-    public void shouldNotSaveTaskWithoutDate() {
+    public void shouldNotSaveTaskWithoutDate() throws MalformedURLException {
         WebDriver driver = accessApp();
 
         try {
@@ -96,7 +105,7 @@ public class TasksTest {
     }
 
     @Test
-    public void shouldNotSaveTaskWithPastDate() {
+    public void shouldNotSaveTaskWithPastDate() throws MalformedURLException {
         WebDriver driver = accessApp();
 
         try {

@@ -146,12 +146,12 @@ public class TasksTest {
             driver.findElement(By.id("saveButton")).click();
 
             String message = driver.findElement(By.id("message")).getText();
-            Assert.assertEquals("Success", message);
+            Assert.assertEquals("Success!", message);
 
             //Remover a tarefa
             driver.findElement(By.xpath("//a[@class='btn btn-outline-danger btn-sm']")).click();
             message = driver.findElement(By.id("message")).getText();
-            Assert.assertEquals("Success", message);
+            Assert.assertEquals("Success!", message);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
